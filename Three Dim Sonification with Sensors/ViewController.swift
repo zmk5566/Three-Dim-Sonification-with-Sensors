@@ -1,19 +1,62 @@
 //
-//  ViewController.swift
-//  Three Dim Sonification with Sensors
+//  ContentView.swift
+//  ios_test
 //
 //  Created by k on 2/10/2022.
 //
-
+import WebKit
 import UIKit
+import CoreMotion
+import JavaScriptCore
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController,WKNavigationDelegate,CMHeadphoneMotionManagerDelegate{
+    
+    
+    let APP = CMHeadphoneMotionManager()
+    var webView: WKWebView!
+    
+    let url = URL(string: "https://zmk5566.github.io/3D-Audio-Visualization-Sonification/examples/ar_linechart_withdata.html")!
+    
+    override func loadView() {
+        webView = WKWebView()
+        webView.navigationDelegate = self
+        view = webView
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+        webView.load(URLRequest(url: url));
 
+        guard APP.isDeviceMotionAvailable else {
+            print("AR PRO is not connected");
+            return
+        }
+        APP.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {[weak self] motion, error  in
+            guard let motion = motion, error == nil else { return }
+            self?.webView.evaluateJavaScript("document.getElementByID = '#212121';", completionHandler: nil)
+        })
+        
+        
+        let jsCode =
+"""
+
+var func_js = function (){
+return "super cool function"
 
 }
 
+"""
+        let context = JSContext();
+        context!.evaluateScript(jsCode);
+        let funcInJS = context!.objectForKeyedSubscript("func_js");
+        let returnValue = funcInJS!.call(withArguments:[]);
+        print(returnValue);
+        
+        
+        
+    }
+    
+    
+
+}

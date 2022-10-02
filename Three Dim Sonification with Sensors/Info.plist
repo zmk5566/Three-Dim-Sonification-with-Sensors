@@ -21,5 +21,13 @@
 			</array>
 		</dict>
 	</dict>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+
+	<key>NSMotionUsageDescription</key>
+	<string>Used to acquire motion for AirPods.</string>
+	
+	<key>CFBundleExecutable</key>
+	<string></string>
 </dict>
 </plist>
