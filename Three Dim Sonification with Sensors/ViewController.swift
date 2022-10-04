@@ -34,7 +34,17 @@ class ViewController: UIViewController,WKNavigationDelegate,CMHeadphoneMotionMan
         }
         APP.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {[weak self] motion, error  in
             guard let motion = motion, error == nil else { return }
-            self?.webView.evaluateJavaScript("document.getElementByID = '#212121';", completionHandler: nil)
+            self?.webView.evaluateJavaScript("document.getElementById('pitch').innerHTML="+String(motion.attitude.pitch), completionHandler: nil)
+            
+            self?.webView.evaluateJavaScript("document.getElementById('yaw').innerHTML="+String(motion.attitude.yaw), completionHandler: nil)
+            
+            self?.webView.evaluateJavaScript("document.getElementById('roll').innerHTML="+String(motion.attitude.roll), completionHandler: nil)
+            
+            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.pitch="+String(motion.attitude.pitch), completionHandler: nil)
+            
+            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.yaw="+String(motion.attitude.yaw), completionHandler: nil)
+            
+            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.raw="+String(motion.attitude.raw), completionHandler: nil)
         })
         
         
