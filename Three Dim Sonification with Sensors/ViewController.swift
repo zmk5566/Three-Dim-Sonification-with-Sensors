@@ -44,7 +44,7 @@ class ViewController: UIViewController,WKNavigationDelegate,CMHeadphoneMotionMan
             
             self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.yaw="+String(motion.attitude.yaw), completionHandler: nil)
             
-            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.raw="+String(motion.attitude.raw), completionHandler: nil)
+            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.roll="+String(motion.attitude.roll), completionHandler: nil)
         })
         
         
