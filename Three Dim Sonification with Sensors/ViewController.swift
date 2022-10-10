@@ -42,9 +42,11 @@ class ViewController: UIViewController,WKNavigationDelegate,CMHeadphoneMotionMan
             
             self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.pitch="+String(motion.attitude.pitch), completionHandler: nil)
             
-            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.yaw="+String(motion.attitude.yaw), completionHandler: nil)
+            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.yaw="+String(-motion.attitude.yaw), completionHandler: nil)
             
-            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.roll="+String(motion.attitude.roll), completionHandler: nil)
+            self?.webView.evaluateJavaScript("global_config.audio_config.audience_location.roll="+String(-motion.attitude.roll), completionHandler: nil)
+            
+            self?.webView.evaluateJavaScript("update_global_config()", completionHandler: nil)
         })
         
         
